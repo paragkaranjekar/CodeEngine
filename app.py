@@ -5,13 +5,26 @@ import re
 from flask import Flask, render_template, request, jsonify
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
+import chardet
+
+
+def detect_encoding(file_path):
+    with open(file_path, 'rb') as f:
+        raw_data = f.read()
+        result = chardet.detect(raw_data)
+        encoding = result['encoding']
+        confidence = result['confidence']
+        return encoding, confidence
 
 
 def load_vocab():
     vocab_idf_values = {}
-    with open('vocab.txt', 'r') as f:
+    my_encoding, confidence = detect_encoding('vocab.txt')
+    with open('vocab.txt', 'r', encoding = my_encoding) as f:
         terms = f.readlines()
-    with open('idf-values.txt', 'r') as f:
+        
+    my_encoding, confidence = detect_encoding('idf-values.txt')
+    with open('idf-values.txt', 'r', encoding = my_encoding) as f:
         idf_terms = f.readlines()
     for (index, line) in zip(idf_terms, terms):
         vocab_idf_values[line.strip()] = int(index.strip())
@@ -20,7 +33,8 @@ def load_vocab():
 
 def load_documents():
     l_document = []
-    with open('documents.txt', 'r') as f:
+    my_encoding, confidence = detect_encoding('documents.txt')
+    with open('documents.txt', 'r', encoding = my_encoding) as f:
         documents = f.readlines()
     l_document = [document.strip().split() for document in documents]
     return l_document
@@ -28,7 +42,8 @@ def load_documents():
 
 def load_difficulty():
     l_document = []
-    with open('difficulty.txt', 'r') as f:
+    my_encoding, confidence = detect_encoding('difficulty.txt')
+    with open('difficulty.txt', 'r', encoding = my_encoding) as f:
         documents = f.readlines()
     l_document = [document.strip() for document in documents]
     return l_document
@@ -36,7 +51,8 @@ def load_difficulty():
 
 def load_links():
     l_links = []
-    with open('links.txt', 'r') as f:
+    my_encoding, confidence = detect_encoding('links.txt')
+    with open('links.txt', 'r', encoding = my_encoding) as f:
         links = f.readlines()
     l_links = [link.strip() for link in links]
     return l_links
@@ -44,7 +60,8 @@ def load_links():
 
 def load_inverted_index():
     inverted_index = {}
-    with open('inverted_index.txt', 'r') as f:
+    my_encoding, confidence = detect_encoding('inverted_index.txt')
+    with open('inverted_index.txt', 'r', encoding = my_encoding) as f:
         inverted_index_terms = f.readlines()
     for index in range(0, len(inverted_index_terms), 2):
         term = inverted_index_terms[index].strip()
