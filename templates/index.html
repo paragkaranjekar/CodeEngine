@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Engine</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container h1 {
+      text-align: center;
+      margin-top: 0;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 48px;
+      color: #000;
+      letter-spacing: 2px;
+    }
+
+    .container {
+      max-width: 1200px;
+      /* Increase the max-width value as needed */
+      margin: 40px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      justify-content: space-between;
+      /* Add this line to distribute the child elements evenly */
+    }
+
+    .container h1 {
+      text-align: center;
+      margin-top: 0;
+    }
+
+    .form {
+      margin-bottom: 20px;
+    }
+
+    .search-form {
+      display: flex;
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 10px 0 0 10px;
+      width: 30%;
+    }
+
+    .search-button {
+      padding: 10px;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 0 10px 10px 0;
+      cursor: pointer;
+      width: 10%;
+      /* Adjust the width percentage as needed */
+    }
+
+    .search-button:hover {
+      background-color: #45a049;
+    }
+
+    .results {
+      margin-top: 40px;
+      /* Increase the margin-top value to create more distance */
+    }
+
+    .result-item {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .result-item:last-child {
+      border-bottom: none;
+    }
+
+    .result-title {
+      margin: 0;
+      color: #000;
+      font-size: 16px;
+    }
+
+    .result-link {
+      color: #0645ad;
+      text-decoration: none;
+    }
+
+    .result-description {
+      color: #555;
+      margin-top: 5px;
+    }
+
+    .container {
+      max-width: 900px;
+      /* Adjust the width as needed */
+    }
+
+    .difficulty-box {
+      display: inline-block;
+      /* Display the boxes side by side */
+      vertical-align: top;
+      /* Align them at the top */
+      width: calc(30% - 20px);
+      /* Adjust the width and margin as needed */
+      margin-right: 10px;
+      margin-left: 10px;
+      /* Adjust the margin as needed */
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .easy {
+      background-color: rgba(0, 255, 0, 0.1);
+      color: #000;
+      /* Low opacity green background */
+    }
+
+    .medium {
+      background-color: rgba(255, 255, 0, 0.1);
+      color: #000;
+      /* Low opacity yellow background */
+    }
+
+    .difficult {
+      background-color: rgba(255, 0, 0, 0.1);
+      color: #000;
+      /* Low opacity red background */
+    }
+
+    .difficulty-heading {
+      padding: 10px;
+      margin: 0;
+      color: #fff;
+      font-size: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Code-Engine</h1>
+    <div class="form">
+      <form method="POST" class="search-form">
+        {{ form.hidden_tag() }}
+        {{ form.search(class="search-input")}}
+        {{ form.submit(class="search-button") }}
+      </form>
+    </div>
+  </div>
+  <div class="results">
+    {% if easy_results %}
+    <div class="difficulty-box easy">
+      <h2 class="difficulty-heading" style="color: rgb(5, 157, 5);">Easy Questions</h2>
+      {% for result in easy_results %}
+      <div class="result-item">
+        <h3 class="result-title"><a class="result-link" href="{{ result['Link'] }}">{{ result['names'] }}</a></h3>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if medium_results %}
+    <div class="difficulty-box medium">
+      <h2 class="difficulty-heading" style="color: rgb(156, 156, 7);">Medium Questions</h2>
+      {% for result in medium_results %}
+      <div class="result-item">
+        <h3 class="result-title"><a class="result-link" href="{{ result['Link'] }}">{{ result['names'] }}</a></h3>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if hard_results %}
+    <div class="difficulty-box difficult">
+      <h2 class="difficulty-heading" style="color: rgb(155, 4, 4);">Hard Questions</h2>
+      {% for result in hard_results %}
+      <div class="result-item">
+        <h3 class="result-title"><a class="result-link" href="{{ result['Link'] }}">{{ result['names'] }}</a></h3>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+  </div>
+</body>
+
+
+
+</html>
